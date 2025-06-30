@@ -1,0 +1,6 @@
+name: "The Cosmo Brewery Company"
+security:
+  default: viewer
+  accessControlList:
+    - id: diamantis.sellis@cosmotech.com
+      role: admin

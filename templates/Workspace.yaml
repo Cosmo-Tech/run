@@ -1,0 +1,17 @@
+key: 'brewery-ci-cd'
+name: 'Brewery CI/CD'
+description: 'CI/CD workspace for brewery simulation testing'
+solution:
+  solutionId: '%SOLUTION_ID%'  # Will be replaced with actual ID
+  runTemplateFilter: ['sim_brewery_parameters']
+  defaultRunTemplateDataset: null
+datasetCopy: false
+version: '1.0.0'
+tags:
+  - 'ci-cd'
+  - 'brewery'
+webApp:
+  url: https://sample.app.cosmotech.com
+sendInputToDataWarehouse: true
+useDedicatedEventHubNamespace: true
+sendScenarioMetadataToEventHub: true

@@ -1,0 +1,9 @@
+name: 'Dev Brewery Runner'
+tags:
+  - 'dev'
+  - 'brewery'
+solutionId: '%SOLUTION_ID%'  # Will be replaced with actual ID
+runTemplateId: 'sim_no_parameters'
+ownerName: 'CI/CD Runner'
+solutionName: 'Dev Brewery Solution'
+runTemplateName: 'Run template with Brewery parameters'
