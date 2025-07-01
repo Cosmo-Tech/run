@@ -1,4 +1,4 @@
-name: "The Cosmo Brewery Company"
+name: "CI"
 security:
   default: viewer
   accessControlList:

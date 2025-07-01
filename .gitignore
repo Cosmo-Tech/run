@@ -2,3 +2,4 @@
 .uv/
 .venv/
 *.html
+.env

@@ -7,3 +7,8 @@ runTemplateId: 'sim_no_parameters'
 ownerName: 'CI/CD Runner'
 solutionName: 'Dev Brewery Solution'
 runTemplateName: 'Run template with Brewery parameters'
+security:
+  default: viewer
+  accessControlList:
+    - id: diamantis.sellis@cosmotech.com
+      role: admin

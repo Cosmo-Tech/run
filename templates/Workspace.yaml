@@ -12,6 +12,8 @@ tags:
   - 'brewery'
 webApp:
   url: https://sample.app.cosmotech.com
-sendInputToDataWarehouse: true
-useDedicatedEventHubNamespace: true
-sendScenarioMetadataToEventHub: true
+security:
+  default: viewer
+  accessControlList:
+    - id: diamantis.sellis@cosmotech.com
+      role: admin
