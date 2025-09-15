@@ -4,7 +4,7 @@ version = "0.3.0"
 description = "Automation script for Solution simulations"
 authors = []
 dependencies = [
-    "cosmotech-api==5.0.0b3",
+    "cosmotech-api==5.0.0b4",
     "python-dotenv>=1.0.0",
     "pyyaml>=6.0.1",
     "rich>=13.7.0",
@@ -18,3 +18,8 @@ build-backend = "hatchling.build"
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+include = [
+  "run/templates/*.yaml"
+]

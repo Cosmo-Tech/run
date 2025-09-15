@@ -1,15 +1,10 @@
 import sys
-from pathlib import Path
 import logging
 
 from run.config import Config
 from run.templates import BreweryTemplates
 from run.simulation import SimulationManager
 from cosmotech_api import ApiClient, Configuration
-from cosmotech_api.models.runner_create_request import RunnerCreateRequest
-from cosmotech_api.models.runner_security import RunnerSecurity
-from cosmotech_api.models.runner_access_control import RunnerAccessControl
-import cosmotech_api
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -18,9 +13,10 @@ logging.basicConfig(level=logging.INFO)
 EXIT_SUCCESS = 0
 EXIT_CONFIG_ERROR = 4
 
+
 def main() -> int:
     """Run the brewery simulation automation.
-    
+
     Returns:
         Exit code indicating success (0) or specific failure (4)
     """
@@ -28,6 +24,7 @@ def main() -> int:
         # Load configuration from environment
         config = Config.from_env()
         logger.info("Starting brewery simulation automation")
+        logger.info(f"Template directory: {config.template_dir}")
         # Load and validate templates
         templates = BreweryTemplates.load_from_directory(config.template_dir)
         templates.validate_templates()
@@ -37,7 +34,6 @@ def main() -> int:
         configuration.access_token = config.access_token
 
         with ApiClient(configuration) as api_client:
-
             # Initialize simulation manager
             sim_manager = SimulationManager(api_client=api_client)
             # Get or create organization
@@ -46,23 +42,23 @@ def main() -> int:
             )
             # Create a solution within the organization
             solution = sim_manager.get_or_create_solution(
-                org_id=organization.id,
-                solution_template=templates.solution
+                org_id=organization.id, solution_template=templates.solution
             )
-            templates.workspace['solution']['solutionId']=solution.id
+            templates.workspace["solution"]["solutionId"] = solution.id
             # Create a workspace within the organization using the solution ID
             workspace = sim_manager.get_or_create_workspace(
-                org_id=organization.id,
-                workspace_template=templates.workspace
+                org_id=organization.id, workspace_template=templates.workspace
             )
-            templates.runner['solutionId']=solution.id
+            templates.runner["solutionId"] = solution.id
             runner = sim_manager.get_or_create_runner(
                 org_id=organization.id,
                 workspace_id=workspace.id,
-                runner_template=templates.runner
+                runner_template=templates.runner,
             )
             run = sim_manager.start(organization.id, workspace.id, runner.id)
-            status = sim_manager.wait_and_log(organization.id, workspace.id, runner.id, run.id)
+            status = sim_manager.wait_and_log(
+                organization.id, workspace.id, runner.id, run.id
+            )
             logger.info(f"organization id: {organization.id}")
             logger.info(f"solution id: {solution.id}")
             logger.info(f"workspace id: {workspace.id}")
@@ -73,12 +69,13 @@ def main() -> int:
             return EXIT_SUCCESS
 
     except ValueError as e:
-        logger.error("Configuration error", error=str(e))
+        logger.error(f"Configuration error: {str(e)}")
         return EXIT_CONFIG_ERROR
-        
+
     except Exception as e:
-        logger.error("Unexpected error", error=str(e))
+        logger.error(f"Unexpected error: {str(e)}")
         return EXIT_CONFIG_ERROR
+
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -1,14 +1,18 @@
 """Utility functions for managing Keycloak tokens."""
+
 import time
 import logging
 from keycloak import KeycloakOpenID
 
 logger = logging.getLogger(__name__)
 
+
 class Authenticate:
     """Manages Keycloak token retrieval and refresh."""
 
-    def __init__(self, server_url: str, realm_name: str, client_id: str, client_secret: str):
+    def __init__(
+        self, server_url: str, realm_name: str, client_id: str, client_secret: str
+    ):
         """Initialize the Keycloak token manager."""
         self.keycloak_openid = KeycloakOpenID(
             server_url=server_url,
