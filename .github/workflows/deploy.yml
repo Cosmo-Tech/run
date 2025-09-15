@@ -1,0 +1,20 @@
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: '0 8 * * *' 
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v5
+            - uses: astral-sh/setup-uv@6
+            - run: |
+                uv venv
+                source .venv/bin/activate
+                uv pip install .
+                python3 -m run.main
+
+
+            
