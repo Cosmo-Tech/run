@@ -64,7 +64,6 @@ def main() -> int:
             logger.info(f"workspace id: {workspace.id}")
             logger.info(f"runner id: {runner.id}")
             logger.info(f"status: {status}")
-            breakpoint()
 
             return EXIT_SUCCESS
 
