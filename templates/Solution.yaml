@@ -2,8 +2,8 @@
 key: brewery-solution-key
 name: Dev Brewery Solution
 description: A solution for brewery automation
-repository: brewerysamplesolution_simulator
-version: 3.0.0-dev.2
+repository: cosmotech/brewerysamplesolution_simulator
+version: 3.0.0-dev.9
 alwaysPull: true
 parameters: []
 parameterGroups: []

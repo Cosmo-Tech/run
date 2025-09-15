@@ -2,52 +2,6 @@
 
 This project provides a minimal Python script for running Cosmotech Brewery simulations in CI/CD pipelines.
 
-## Project Structure
-
-```
-run/
-├── run/
-│   ├── __init__.py
-│   ├── config.py          # Environment and configuration handling
-│   ├── auth.py           # Authentication with Cosmotech platform
-│   ├── templates.py      # YAML template loading and validation
-│   └── simulation.py     # Core simulation logic
-├── templates/            # YAML template files
-├── logs/                 # Log output directory
-├── tests/               
-│   └── test_simulation.py
-├── .env.example         # Example environment variables
-├── README.md           
-└── main.py             # Entry point
-```
-
-
-## Key Features
-
-1. **Logging System**
-   - Log to both file and stdout for CI/CD visibility
-   - Different log levels for debugging and production
-   - Structured logging format with timestamps
-
-2. **Error Handling**
-   - Custom exceptions for different failure scenarios
-   - Appropriate exit codes for CI/CD pipeline
-   - Detailed error messages in logs
-
-3. **Configuration**
-   - Environment variables for sensitive data
-   - YAML template loading with validation
-   - Fallback to default parameters
-
-4. **Authentication**
-   - Secure handling of credentials
-   - Token management
-   - Automatic retry on token expiration
-
-5. **Simulation Management**
-   - Progress monitoring
-   - Status checking
-   - Timeout handling
 
 ## Required Environment Variables
 
@@ -88,7 +42,7 @@ uv pip install -e .
 
 6. Activate VPN and run the simulation:
 ```bash
-python3 run/main.py
+python3 -m run.main
 ```
 
 ## Exit Codes

@@ -1,4 +1,5 @@
 """Configuration management for the brewery automation script."""
+
 import os
 import logging
 from dataclasses import dataclass
@@ -11,9 +12,11 @@ from run.authenticate import Authenticate
 # Load environment variables from .env file
 load_dotenv()
 
+
 @dataclass
 class Config:
     """Configuration settings for the automation script."""
+
     api_url: str
     access_token: str
     organization_id: Optional[str]
@@ -21,14 +24,14 @@ class Config:
     template_dir: Path
 
     @classmethod
-    def from_env(cls) -> 'Config':
+    def from_env(cls) -> "Config":
         """Create configuration from environment variables."""
         required_vars = {
-            'COSMOTECH_API_URL': 'API URL',
-            'SERVER_URL': 'Keycloak Server URL',
-            'REALM_NAME': 'Keycloak Realm Name',
-            'COSMOTECH_CLIENT_ID': 'Client ID',
-            'COSMOTECH_CLIENT_SECRET': 'Client Secret',
+            "COSMOTECH_API_URL": "API URL",
+            "SERVER_URL": "Keycloak Server URL",
+            "REALM_NAME": "Keycloak Realm Name",
+            "COSMOTECH_CLIENT_ID": "Client ID",
+            "COSMOTECH_CLIENT_SECRET": "Client Secret",
         }
 
         # Check required variables
@@ -39,8 +42,8 @@ class Config:
             )
 
         # Get optional variables with defaults
-        organization_id = os.getenv('ORGANIZATION_ID')
-        log_level = os.getenv('LOG_LEVEL', 'INFO').upper()
+        organization_id = os.getenv("ORGANIZATION_ID")
+        log_level = os.getenv("LOG_LEVEL", "INFO").upper()
 
         # Validate log level
         if log_level not in logging._nameToLevel:
@@ -48,18 +51,18 @@ class Config:
 
         # Set template directory relative to project root
         project_root = Path(__file__).parent.parent
-        template_dir = project_root / 'templates'
+        template_dir = project_root / "templates"
 
         # Initialize Authenticator
         token_manager = Authenticate(
-            server_url=os.getenv('SERVER_URL'),
-            realm_name=os.getenv('REALM_NAME'),
-            client_id=os.getenv('COSMOTECH_CLIENT_ID'),
-            client_secret=os.getenv('COSMOTECH_CLIENT_SECRET'),
+            server_url=os.getenv("SERVER_URL"),
+            realm_name=os.getenv("REALM_NAME"),
+            client_id=os.getenv("COSMOTECH_CLIENT_ID"),
+            client_secret=os.getenv("COSMOTECH_CLIENT_SECRET"),
         )
 
         return cls(
-            api_url=os.getenv('COSMOTECH_API_URL'),
+            api_url=os.getenv("COSMOTECH_API_URL"),
             access_token=token_manager.get_token(),
             organization_id=organization_id,
             log_level=log_level,
@@ -74,10 +77,10 @@ class Config:
             )
 
         required_templates = [
-            'Organization.yaml',
-            'Solution.yaml',
-            'Runner.yaml',
-            'Workspace-dev.yaml'
+            "Organization.yaml",
+            "Solution.yaml",
+            "Runner.yaml",
+            "Workspace-dev.yaml",
         ]
 
         missing = []

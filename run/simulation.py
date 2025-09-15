@@ -9,10 +9,13 @@ from cosmotech_api.models.solution_create_request import SolutionCreateRequest
 from cosmotech_api.models.organization_create_request import OrganizationCreateRequest
 from cosmotech_api.models.workspace_create_request import WorkspaceCreateRequest
 from cosmotech_api.models.runner_create_request import RunnerCreateRequest
+
 logger = logging.getLogger(__name__)
+
 
 class SimulationManager:
     """Manages brewery simulation operations."""
+
     def __init__(self, api_client):
         self.organization_api = OrganizationApi(api_client)
         self.workspace_api = WorkspaceApi(api_client)
@@ -20,18 +23,22 @@ class SimulationManager:
         self.runner_api = RunnerApi(api_client)
         self.run_api = RunApi(api_client)
 
-    def start(self,organization_id, workspace_id, runner_id):
-        run = self.runner_api.start_run(organization_id=organization_id, workspace_id=workspace_id, runner_id=runner_id)
+    def start(self, organization_id, workspace_id, runner_id):
+        run = self.runner_api.start_run(
+            organization_id=organization_id,
+            workspace_id=workspace_id,
+            runner_id=runner_id,
+        )
         return run
 
-    def wait_and_log(self,organization_id, workspace_id, runner_id, run_id):
+    def wait_and_log(self, organization_id, workspace_id, runner_id, run_id):
         """Monitor the execution of a run."""
         try:
             status = self.run_api.get_run_status(
                 organization_id=organization_id,
                 workspace_id=workspace_id,
                 runner_id=runner_id,
-                run_id=run_id
+                run_id=run_id,
             )
             logger.info(f"Run status: {status}")
             return status
@@ -49,8 +56,10 @@ class SimulationManager:
                     return org
             # Create organization if not found
             new_org = self.organization_api.create_organization(
-                organization_create_request=OrganizationCreateRequest(name=organization_template["name"],
-                                                                      securoty=organization_template["security"])
+                organization_create_request=OrganizationCreateRequest(
+                    name=organization_template["name"],
+                    security=organization_template["security"],
+                )
             )
             logger.info(f"Created new organization: {new_org.name}")
             return new_org
@@ -58,23 +67,26 @@ class SimulationManager:
             logger.error(f"Failed to get or create organization: {str(e)}")
             raise
 
-
     def get_or_create_solution(self, org_id, solution_template):
         """Retrieve a solution or create one if it does not exist."""
         try:
-            solutions = self.solution_api.list_solutions(organization_id=org_id, page=0, size=100)
+            solutions = self.solution_api.list_solutions(
+                organization_id=org_id, page=0, size=100
+            )
             for sol in solutions:
                 if sol.name == solution_template["name"]:
                     logger.info(f"Solution '{sol.name}' already exists: {sol.id}")
                     return sol
             new_solution = self.solution_api.create_solution(
                 organization_id=org_id,
-                solution_create_request=SolutionCreateRequest(name=solution_template["name"],
-                                                              key=solution_template["key"],
-                                                              repository=solution_template["repository"],
-                                                              version=solution_template["version"],
-                                                              security=solution_template["security"],
-                                                              runTemplates=solution_template["runTemplates"])
+                solution_create_request=SolutionCreateRequest(
+                    name=solution_template["name"],
+                    key=solution_template["key"],
+                    repository=solution_template["repository"],
+                    version=solution_template["version"],
+                    security=solution_template["security"],
+                    runTemplates=solution_template["runTemplates"],
+                ),
             )
             logger.info(f"Created new solution: {new_solution.name}")
             return new_solution
@@ -85,7 +97,9 @@ class SimulationManager:
     def get_or_create_workspace(self, org_id, workspace_template):
         """Retrieve a workspace or create one if it does not exist."""
         try:
-            workspaces = self.workspace_api.list_workspaces(organization_id=org_id, page=0, size=100)
+            workspaces = self.workspace_api.list_workspaces(
+                organization_id=org_id, page=0, size=100
+            )
             for ws in workspaces:
                 if ws.name == workspace_template["name"]:
                     logger.info(f"Workspace '{ws.name}' already exists: {ws.id}")
@@ -94,11 +108,12 @@ class SimulationManager:
             # Create workspace if not found
             new_workspace = self.workspace_api.create_workspace(
                 organization_id=org_id,
-                workspace_create_request=WorkspaceCreateRequest(name=workspace_template["name"],
-                                                                key=workspace_template["key"],
-                                                                solution=workspace_template["solution"],
-                                                                security=workspace_template["security"]
-                                                                )
+                workspace_create_request=WorkspaceCreateRequest(
+                    name=workspace_template["name"],
+                    key=workspace_template["key"],
+                    solution=workspace_template["solution"],
+                    security=workspace_template["security"],
+                ),
             )
             logger.info(f"Created new workspace: {new_workspace.name}")
             return new_workspace
@@ -110,7 +125,9 @@ class SimulationManager:
         """Retrieve a runner or create one if it does not exist."""
         try:
             logger.info("trying to get runners")
-            runners = self.runner_api.list_runners(organization_id=org_id, workspace_id=workspace_id)
+            runners = self.runner_api.list_runners(
+                organization_id=org_id, workspace_id=workspace_id
+            )
             for runner in runners:
                 if runner.name == runner_template["name"]:
                     logger.info(f"Runner '{runner.name}' already exists: {runner.id}")
@@ -120,11 +137,13 @@ class SimulationManager:
             new_runner = self.runner_api.create_runner(
                 organization_id=org_id,
                 workspace_id=workspace_id,
-                  runner_create_request=RunnerCreateRequest(name=runner_template["name"],
-                                                            solution_id=runner_template["solutionId"],
-                                                            ownerName=runner_template["ownerName"],
-                                                            run_template_id=runner_template["runTemplateId"],
-                                                            security=runner_template["security"])
+                runner_create_request=RunnerCreateRequest(
+                    name=runner_template["name"],
+                    solution_id=runner_template["solutionId"],
+                    ownerName=runner_template["ownerName"],
+                    run_template_id=runner_template["runTemplateId"],
+                    security=runner_template["security"],
+                ),
             )
             logger.info(f"Created new runner: {new_runner.name}")
             return new_runner
