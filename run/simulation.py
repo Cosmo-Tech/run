@@ -58,7 +58,7 @@ class SimulationManager:
             new_org = self.organization_api.create_organization(
                 organization_create_request=OrganizationCreateRequest(
                     name=organization_template["name"],
-                    securoty=organization_template["security"],
+                    security=organization_template["security"],
                 )
             )
             logger.info(f"Created new organization: {new_org.name}")
