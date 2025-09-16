@@ -13,10 +13,11 @@ jobs:
                 environment: [warp_eng-api-ci]
         environment: ${{ matrix.environment }}
         env:
-            COSMOTECH_API_URL: ${{ secrets.COSMOTECH_API_URL_}}
-            COSMOTECH_CLIENT_ID: ${{ secrets.COSMOTECH_CLIENT_ID_}}
+            COSMOTECH_API_URL: ${{ secrets.COSMOTECH_API_URL }}
+            SERVER_URL: ${{ secrets.SERVER_URL }}
+            COSMOTECH_CLIENT_ID: ${{ secrets.COSMOTECH_CLIENT_ID }}
             COSMOTECH_CLIENT_SECRET: ${{ secrets.COSMOTECH_CLIENT_SECRET }}
-            ORGANIZATION_ID: ${{ secrets.ORGANIZATION_ID }}
+            REALM_NAME: ${{ secrets.REALM_NAME }}
 
         steps:
             - name: Checkout repository

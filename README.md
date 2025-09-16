@@ -6,10 +6,11 @@ This project provides a minimal Python script for running Cosmotech Brewery simu
 ## Required Environment Variables
 
 ```bash
-COSMOTECH_API_URL=https://api.cosmotech.com
-COSMOTECH_CLIENT_ID=your_client_id
+COSMOTECH_API_URL=https://cluster/tenant/version
+SERVER_URL=https://cluster/keycloak/
+REALM_NAME=code_name
+COSMOTECH_CLIENT_ID=automation-client
 COSMOTECH_CLIENT_SECRET=your_client_secret
-ORGANIZATION_ID=your_org_id  # Optional, can create new org
 LOG_LEVEL=INFO  # Optional, defaults to INFO
 ```
 
