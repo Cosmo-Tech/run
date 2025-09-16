@@ -68,7 +68,7 @@ class SimulationManager:
             organization_template (OrganizationCreateRequest): Template for organization creation.
 
         Returns:
-            Organization: _description_
+            Organization: Organization object.
         """
         try:
             new_org = self.organization_api.create_organization(
