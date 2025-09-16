@@ -28,7 +28,7 @@ def main() -> int:
     """Run the brewery simulation automation.
 
     Returns:
-        Exit code indicating success (0) failure (1)
+        Exit code indicating success (0) or failure (1)
     """
     try:
         # Load configuration from environment
