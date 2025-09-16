@@ -11,6 +11,13 @@ jobs:
         strategy:
             matrix:
                 environment: [warp_eng-api-ci]
+        environment: ${{ matrix.environment }}
+        env:
+            COSMOTECH_API_URL: ${{ secrets.COSMOTECH_API_URL_}}
+            COSMOTECH_CLIENT_ID: ${{ secrets.COSMOTECH_CLIENT_ID_}}
+            COSMOTECH_CLIENT_SECRET: ${{ secrets.COSMOTECH_CLIENT_SECRET }}
+            ORGANIZATION_ID: ${{ secrets.ORGANIZATION_ID }}
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v5
