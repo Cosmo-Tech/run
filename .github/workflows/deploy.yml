@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                environment: [warp_eng-api-ci]
+                environment: [warp_eng-api-ci, vela_sphinx, warp_sphinx]
         environment: ${{ matrix.environment }}
         env:
             COSMOTECH_API_URL: ${{ secrets.COSMOTECH_API_URL }}
