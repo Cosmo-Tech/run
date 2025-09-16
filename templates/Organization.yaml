@@ -1,4 +1,4 @@
-name: "CI"
+name: "Transient Organization for CI/CD"
 security:
   default: viewer
   accessControlList:
