@@ -8,6 +8,9 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                environment: [warp_eng-api-ci]
         steps:
             - name: Checkout repository
               uses: actions/checkout@v5
