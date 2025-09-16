@@ -1,12 +1,13 @@
 """Configuration management for the brewery automation script."""
 
-import os
 import logging
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
 from dotenv import load_dotenv
+
 from run.authenticate import Authenticate
 
 # Load environment variables from .env file

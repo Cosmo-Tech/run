@@ -1,7 +1,8 @@
 """Utility functions for managing Keycloak tokens."""
 
-import time
 import logging
+import time
+
 from keycloak import KeycloakOpenID
 
 logger = logging.getLogger(__name__)

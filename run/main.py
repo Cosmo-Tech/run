@@ -1,10 +1,11 @@
-import sys
 import logging
+import sys
+
+from cosmotech_api import ApiClient, Configuration
 
 from run.config import Config
-from run.templates import BreweryTemplates
 from run.simulation import SimulationManager
-from cosmotech_api import ApiClient, Configuration
+from run.templates import BreweryTemplates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
