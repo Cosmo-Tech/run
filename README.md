@@ -44,12 +44,3 @@ uv pip install -e .
 ```bash
 python3 -m run.main
 ```
-
-## Exit Codes
-
-- 0: Success
-- 1: Authentication error
-- 2: Template loading error
-- 3: Simulation creation error
-- 4: Simulation execution error
-- 5: Configuration error

@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Exit codes
 EXIT_SUCCESS = 0
-EXIT_CONFIG_ERROR = 4
+EXIT_ERROR = 1
 
 
 def main() -> int:
@@ -70,11 +70,11 @@ def main() -> int:
 
     except ValueError as e:
         logger.error(f"Configuration error: {str(e)}")
-        return EXIT_CONFIG_ERROR
+        return EXIT_ERROR
 
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
-        return EXIT_CONFIG_ERROR
+        return EXIT_ERROR
 
 
 if __name__ == "__main__":
