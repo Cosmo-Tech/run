@@ -2,7 +2,6 @@ import logging
 import sys
 
 from cosmotech_api import ApiClient, Configuration, MetaApi
-from cosmotech_api.models.about_info import AboutInfo
 from run.config import Config
 from run.simulation import SimulationManager
 from run.templates import BreweryTemplates
