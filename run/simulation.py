@@ -50,6 +50,9 @@ class SimulationManager:
     def delete_organization(self, name):
         """Delete an organization."""
         organization_id = self.get_organization_id_by_name(name)
+        if not organization_id:
+            logger.info(f"Organization '{name}' does not exist. No deletion needed.")
+            return
         # unregister organization
         try:
             self.organization_api.delete_organization(organization_id=organization_id)
