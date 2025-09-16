@@ -3,10 +3,9 @@
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 import yaml
-
 
 logger = logging.getLogger(__name__)
 

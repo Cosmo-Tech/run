@@ -1,24 +1,34 @@
-import sys
 import logging
+import sys
 
+from cosmotech_api import ApiClient, Configuration, MetaApi
 from run.config import Config
-from run.templates import BreweryTemplates
 from run.simulation import SimulationManager
-from cosmotech_api import ApiClient, Configuration
+from run.templates import BreweryTemplates
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Exit codes
 EXIT_SUCCESS = 0
-EXIT_CONFIG_ERROR = 4
+EXIT_ERROR = 1
 
+def get_api_version(configuration):
+    try:
+        with ApiClient(configuration) as api_client:
+            api_instance = MetaApi(api_client)
+            api_response = api_instance.about()
+            logger.info(api_response)
+        return api_response.version
+    except Exception as e:
+        logger.error(f"Error retrieving API version: {str(e)}")
+        raise e
 
 def main() -> int:
     """Run the brewery simulation automation.
 
     Returns:
-        Exit code indicating success (0) or specific failure (4)
+        Exit code indicating success (0) or failure (1)
     """
     try:
         # Load configuration from environment
@@ -33,24 +43,25 @@ def main() -> int:
         configuration = Configuration(config.api_url)
         configuration.access_token = config.access_token
 
+        get_api_version(configuration)
+
         with ApiClient(configuration) as api_client:
             # Initialize simulation manager
             sim_manager = SimulationManager(api_client=api_client)
-            # Get or create organization
-            organization = sim_manager.get_or_create_organization(
-                templates.organization
-            )
+            # Delete organization if already exists
+            sim_manager.delete_organization(templates.organization["name"])
+            organization = sim_manager.create_organization(templates.organization)
             # Create a solution within the organization
-            solution = sim_manager.get_or_create_solution(
+            solution = sim_manager.create_solution(
                 org_id=organization.id, solution_template=templates.solution
             )
             templates.workspace["solution"]["solutionId"] = solution.id
             # Create a workspace within the organization using the solution ID
-            workspace = sim_manager.get_or_create_workspace(
+            workspace = sim_manager.create_workspace(
                 org_id=organization.id, workspace_template=templates.workspace
             )
             templates.runner["solutionId"] = solution.id
-            runner = sim_manager.get_or_create_runner(
+            runner = sim_manager.create_runner(
                 org_id=organization.id,
                 workspace_id=workspace.id,
                 runner_template=templates.runner,
@@ -69,11 +80,11 @@ def main() -> int:
 
     except ValueError as e:
         logger.error(f"Configuration error: {str(e)}")
-        return EXIT_CONFIG_ERROR
+        return EXIT_ERROR
 
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
-        return EXIT_CONFIG_ERROR
+        return EXIT_ERROR
 
 
 if __name__ == "__main__":

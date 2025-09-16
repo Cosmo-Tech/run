@@ -11,12 +11,9 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v5
-            - uses: astral-sh/setup-uv@6
+            - uses: astral-sh/setup-uv@v6
             - run: |
                 uv venv
                 source .venv/bin/activate
                 uv pip install .
                 python3 -m run.main
-
-
-            
