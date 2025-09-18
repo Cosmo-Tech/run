@@ -2,6 +2,7 @@ import logging
 import sys
 
 from cosmotech_api import ApiClient, Configuration, MetaApi
+
 from run.config import Config
 from run.simulation import SimulationManager
 from run.templates import BreweryTemplates
@@ -67,14 +68,19 @@ def main() -> int:
                 runner_template=templates.runner,
             )
             run = sim_manager.start(organization.id, workspace.id, runner.id)
-            status = sim_manager.wait_and_log(
+            status = sim_manager.wait_and_monitor_status(
+                organization.id, workspace.id, runner.id, run.id
+            )
+            logs = sim_manager.get_run_logs(
                 organization.id, workspace.id, runner.id, run.id
             )
             logger.info(f"organization id: {organization.id}")
             logger.info(f"solution id: {solution.id}")
             logger.info(f"workspace id: {workspace.id}")
             logger.info(f"runner id: {runner.id}")
-            logger.info(f"status: {status}")
+            logger.info(f"status: {status.state.name}")
+            logger.info("Run logs:")
+            logger.info(logs)
 
             return EXIT_SUCCESS
 

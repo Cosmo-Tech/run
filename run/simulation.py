@@ -1,5 +1,6 @@
 # Simulation management for brewery automation script
 import logging
+from time import sleep, time
 
 from cosmotech_api.api.organization_api import OrganizationApi
 from cosmotech_api.api.run_api import RunApi
@@ -30,21 +31,43 @@ class SimulationManager:
             workspace_id=workspace_id,
             runner_id=runner_id,
         )
+        logger.info(f"Started run: {run.id}")
         return run
 
-    def wait_and_log(self, organization_id, workspace_id, runner_id, run_id):
+    def wait_and_monitor_status(self, organization_id, workspace_id, runner_id, run_id, max_time=60):
         """Monitor the execution of a run."""
+        start_time = time()
+        while True:
+            try:
+                status = self.run_api.get_run_status(
+                    organization_id=organization_id,
+                    workspace_id=workspace_id,
+                    runner_id=runner_id,
+                    run_id=run_id,
+                )
+                logger.info(f"Run status: {status.state.name}")
+                if status.state.name in ["SUCCESSFUL", "FAILED"]:
+                    return status
+                if time() - start_time > max_time:
+                    logger.error("Max monitoring time reached, exiting.")
+                    return status
+                sleep(2)
+            except Exception as e:
+                logger.error(f"Failed to monitor scenario: {str(e)}")
+                raise
+
+    def get_run_logs(self, organization_id, workspace_id, runner_id, run_id):
+        """Fetch and log the output of a run."""
         try:
-            status = self.run_api.get_run_status(
+            logs = self.run_api.get_run_logs(
                 organization_id=organization_id,
                 workspace_id=workspace_id,
                 runner_id=runner_id,
                 run_id=run_id,
             )
-            logger.info(f"Run status: {status}")
-            return status
+            return logs
         except Exception as e:
-            logger.error(f"Failed to monitor scenario: {str(e)}")
+            logger.error(f"Failed to fetch run logs: {str(e)}")
             raise
 
     def delete_organization(self, name):
