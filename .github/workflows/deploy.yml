@@ -9,6 +9,7 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
                 environment: [warp_eng-api-ci, vela_sphinx, warp_sphinx]
         environment: ${{ matrix.environment }}
