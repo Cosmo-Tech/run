@@ -8,16 +8,7 @@ alwaysPull: true
 parameters: []
 parameterGroups: []
 runTemplates:
-  - id: 'sim_no_parameters'
-    labels:
-      fr: 'Run template sans paramètres'
-      en: 'Run template without parameters'
-    name: 'Run template without parameters'
-    description: 'Run template without parameters'
-    csmSimulation: 'BreweryDemoSimulationWithConnector'
-    tags:
-      - 'sim_no_parameters'
-      - 'No param'
+  - id: 'minimal'
 security:
   default: none
   accessControlList: []
