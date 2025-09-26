@@ -31,7 +31,7 @@ class SimulationManager:
             workspace_id=workspace_id,
             runner_id=runner_id,
         )
-        logger.info(f"Started run: {run.id}")
+        logger.info(f"Started run {run}: {run.id}")
         return run
 
     def wait_and_monitor_status(self, organization_id, workspace_id, runner_id, run_id, max_time=60):
@@ -100,6 +100,7 @@ class SimulationManager:
                     security=organization_template["security"],
                 )
             )
+            logger.info(f"Created new organization: {new_org.name}: {new_org.id}")
         except Exception as e:
             logger.error(f"Failed to create organization: {str(e)}")
             raise
@@ -133,7 +134,7 @@ class SimulationManager:
                     runTemplates=solution_template["runTemplates"],
                 ),
             )
-            logger.info(f"Created new solution: {new_solution.name}")
+            logger.info(f"Created new solution: {new_solution.name}: {new_solution.id}")
             return new_solution
         except Exception as e:
             logger.error(f"Failed to create solution: {str(e)}")
@@ -151,7 +152,7 @@ class SimulationManager:
                     security=workspace_template["security"],
                 ),
             )
-            logger.info(f"Created new workspace: {new_workspace.name}")
+            logger.info(f"Created new workspace: {new_workspace.name}: {new_workspace.id}")
             return new_workspace
         except Exception as e:
             logger.error(f"Failed to create workspace: {str(e)}")
@@ -171,7 +172,7 @@ class SimulationManager:
                     security=runner_template["security"],
                 ),
             )
-            logger.info(f"Created new runner: {new_runner.name}")
+            logger.info(f"Created new runner: {new_runner.name}: {new_runner.id}")
             return new_runner
         except Exception as e:
             logger.error(f"Failed to create runner: {str(e)}")
