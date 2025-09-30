@@ -45,3 +45,9 @@ uv pip install -e .
 ```bash
 python3 -m run.main
 ```
+
+Alternatively run with docker:
+```bash
+docker build -t cosmotech-run .
+docker run --env-file .env cosmotech-run
+```
