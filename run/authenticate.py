@@ -23,6 +23,7 @@ class Authenticate:
         )
         self.access_token = None
         self.token_expiry = None
+        logger.info("Authenticator initialized")
 
     def refresh_token(self) -> str:
         """Refresh the access token."""
