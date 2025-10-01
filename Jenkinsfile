@@ -8,7 +8,7 @@ node('docker') {
                 sh 'docker run --env-file $ENV_FILE cosmotech-run'
             }
         }
-        steage('deploy on azure'){
+        stage('deploy on azure'){
             withCredentials([file(credentialsId: 'WARP_SPHINX_SECRET', variable: 'ENV_FILE')]) {
                 sh 'docker run --env-file $ENV_FILE cosmotech-run'
             }
