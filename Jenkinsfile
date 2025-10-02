@@ -3,7 +3,6 @@ node('docker') {
         cleanWs()
         stage('checkout') {
             git url: 'https://github.com/Cosmo-Tech/run.git',
-            branch: 'debug',
             credentialsId: '99baa078-02ed-46df-bc7d-2ca01fb32d1d'
         }
         stage('build image') {
