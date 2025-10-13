@@ -51,7 +51,7 @@ class SimulationManager:
                 if time() - start_time > max_time:
                     logger.error("Max monitoring time reached, exiting.")
                     return status
-                sleep(2)
+                sleep(1)
             except Exception as e:
                 logger.error(f"Failed to monitor scenario: {str(e)}")
                 raise
