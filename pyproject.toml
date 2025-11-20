@@ -1,10 +1,10 @@
 [project]
 name = "run"
-version = "0.4.0"
+version = "0.5.0"
 description = "Automation script for Solution simulations"
 authors = []
 dependencies = [
-    "cosmotech-api==5.0.0b5",
+    "cosmotech-api==5.0.0-rc1",
     "python-dotenv>=1.0.0",
     "pyyaml>=6.0.1",
     "rich>=13.7.0",
