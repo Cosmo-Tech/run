@@ -21,6 +21,7 @@ class Authenticate:
             realm_name=realm_name,
             client_secret_key=client_secret,
         )
+        logger.debug(f"server_url={server_url}, client_id={client_id}, realm_name={realm_name}, client_secret_key={client_secret}")
         self.access_token = None
         self.token_expiry = None
         logger.info("Authenticator initialized")
