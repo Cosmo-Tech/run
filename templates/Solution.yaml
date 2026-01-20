@@ -4,7 +4,7 @@ name: Dev Brewery Solution
 description: A solution for brewery automation
 repository: cosmotech/brewerysamplesolution_simulator
 version: latest
-alwaysPull: true
+alwaysPull: True
 parameters: []
 parameterGroups: []
 runTemplates:
