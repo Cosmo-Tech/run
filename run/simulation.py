@@ -34,7 +34,7 @@ class SimulationManager:
         logger.info(f"Started run {run}: {run.id}")
         return run
 
-    def wait_and_monitor_status(self, organization_id, workspace_id, runner_id, run_id, max_time=60):
+    def wait_and_monitor_status(self, organization_id, workspace_id, runner_id, run_id, max_time=120):
         """Monitor the execution of a run."""
         start_time = time()
         while True:
